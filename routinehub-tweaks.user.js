@@ -1,33 +1,19 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.1
+// @version     2.2
 // @license     MIT
 // @author      https://github.com/atnbueno
-// @description Experiments in improving the experience of using routinehub.co
+// @description Experiments in improving the UX of using routinehub.co
 // @icon        https://s3.us-west-002.backblazeb2.com/routinehub/static/icon/apple-touch-icon-76x76.png
 // @namespace   https://github.com/atnbueno/userscripts
 // @supportURL  https://github.com/atnbueno/userscripts/issues
 // @match       https://routinehub.co/*
-// @grant       GM_addStyle
+// @run-at      document-start
+// @grant       GM.addStyle
 // ==/UserScript==
 
 (function () {
   "use strict";
-
-  if (typeof GM_addStyle == 'undefined') {
-    var GM_addStyle = (CSS) => {
-      'use strict';
-      let head = document.getElementsByTagName('head')[0];
-      if (head) {
-        let style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent = CSS;
-        head.appendChild(style);
-        return style;
-      }
-      return null;
-    };
-  }
 
   document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -37,11 +23,40 @@
       image.setAttribute('srcset', image.src.replace(/^(.+?)\.(gif|jpe?g|png|webp).*$/g, "$1.$2, $1_2x.$2 2x"));
     });
 
+    // Add blinking effect to the carousel when clicked
+    const carousel = document.querySelector('#carousel');
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.classList && node.classList.contains('slick-list')) {
+              ['touchstart', 'mousedown'].forEach(event => {
+                node.addEventListener(event, () => node.classList.add('darkened'));
+              });
+              ['touchend', 'mouseup'].forEach(event => {
+                node.addEventListener(event, () => node.classList.remove('darkened'));
+              });
+            }
+          });
+        }
+      });
+    });
+    observer.observe(carousel, { childList: true, subtree: true });
+
+    GM.addStyle(
     // Adjusts the homepage carousel size
-    GM_addStyle(''+`
-      #carousel, .slick-slide {
+    `#carousel, .slick-slide {
         margin: 0 auto;
         max-width: 660px;
+      }`+
+    // Avoids layout shifting in the navbar
+    `.fas {
+        min-width: 20px;
+      }`+
+    // Visual feedback when the carousel is clicked or tapped
+    `.darkened {
+        background-color: #0002;
+        filter: brightness(80%);
       }
     `);
 
