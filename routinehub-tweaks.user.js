@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.2
+// @version     2.3
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -25,23 +25,25 @@
 
     // Add blinking effect to the carousel when clicked
     const carousel = document.querySelector('#carousel');
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-          mutation.addedNodes.forEach(function(node) {
-            if (node.classList && node.classList.contains('slick-list')) {
-              ['touchstart', 'mousedown'].forEach(event => {
-                node.addEventListener(event, () => node.classList.add('darkened'));
-              });
-              ['touchend', 'mouseup'].forEach(event => {
-                node.addEventListener(event, () => node.classList.remove('darkened'));
-              });
-            }
-          });
-        }
+    if (carousel) {
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.classList && node.classList.contains('slick-list')) {
+                ['touchstart', 'mousedown'].forEach(event => {
+                  node.addEventListener(event, () => node.classList.add('darkened'));
+                });
+                ['touchend', 'mouseup'].forEach(event => {
+                  node.addEventListener(event, () => node.classList.remove('darkened'));
+                });
+              }
+            });
+          }
+        });
       });
-    });
-    observer.observe(carousel, { childList: true, subtree: true });
+      observer.observe(carousel, { childList: true, subtree: true });
+    }
 
     GM.addStyle(
     // Adjusts the homepage carousel size
@@ -57,7 +59,19 @@
     `.darkened {
         background-color: #0002;
         filter: brightness(80%);
-      }
+      }`+
+    // Restores red background for "delete" buttons
+    `.button.is-dark.is-danger, .button.is-fullwidth[href$="/delete"] {
+      background-color: hsl(348, 86%, 61%);
+    }`+
+    // Ensures proper .button separation
+    `.button[type="submit"], button+a.button {
+      margin-bottom: 0.5rem;
+    }`+
+    // Avoids button overflowing horizontally in version histories
+    `.button.is-fullwidth {
+      width: auto;
+    }
     `);
 
   });
