@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.3
+// @version     2.4
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -17,11 +17,13 @@
 
   document.addEventListener("DOMContentLoaded", function(event) {
 
+/*
     // Adds retina version of images if they are available
     document.querySelectorAll('.content img').forEach(image => {
       image.onerror = () => image.removeAttribute('srcset');
       image.setAttribute('srcset', image.src.replace(/^(.+?)\.(gif|jpe?g|png|webp).*$/g, "$1.$2, $1_2x.$2 2x"));
     });
+*/
 
     // Add blinking effect to the carousel when clicked
     const carousel = document.querySelector('#carousel');
