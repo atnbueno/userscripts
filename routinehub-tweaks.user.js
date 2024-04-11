@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.4
+// @version     2.4.1
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -8,6 +8,7 @@
 // @namespace   https://github.com/atnbueno/userscripts
 // @supportURL  https://github.com/atnbueno/userscripts/issues
 // @match       https://routinehub.co/*
+// @match       https://www.routinehub.co/*
 // @run-at      document-start
 // @grant       GM.addStyle
 // ==/UserScript==
