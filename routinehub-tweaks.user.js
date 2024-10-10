@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.4.1
+// @version     2.5
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -48,6 +48,18 @@
       observer.observe(carousel, { childList: true, subtree: true });
     }
 
+    // Toggles the logged-in dropdown menu when hovering over the gear icon
+    const dropdown = document.querySelector(".navbar-menu .dropdown");
+    if (dropdown) {
+    const dropdownMenu = dropdown.querySelector(".dropdown-menu");
+      dropdown.addEventListener("mouseenter", function() {
+        dropdownMenu.style.display = "block";
+      });
+      dropdown.addEventListener("mouseleave", function() {
+        dropdownMenu.style.display = "none";
+      });
+    }
+
     GM.addStyle(
     // Adjusts the homepage carousel size
     `#carousel, .slick-slide {
@@ -70,10 +82,16 @@
     // Ensures proper .button separation
     `.button[type="submit"], button+a.button {
       margin-bottom: 0.5rem;
+      margin-right: 0.75rem;
     }`+
     // Avoids button overflowing horizontally in version histories
     `.button.is-fullwidth {
       width: auto;
+    }`+
+    // Fixes layout shifting because of ads
+    `#ads {
+      width: 310px;
+      height: 256px;
     }
     `);
 
