@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.5
+// @version     2.6
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -92,8 +92,16 @@
     `#ads {
       width: 310px;
       height: 256px;
-    }
-    `);
+    }`+
+    // Fixes 2x icons
+    `.svg-inline--fa.fa-stack-2x {
+      height: inherit;
+      width: inherit;
+    }`+
+    // Wraps code
+    `.content pre {
+      white-space: pre-line;
+    }`);
 
   });
 })();
