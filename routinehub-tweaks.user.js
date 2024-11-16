@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.6
+// @version     2.7
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -58,6 +58,13 @@
       dropdown.addEventListener("mouseleave", function() {
         dropdownMenu.style.display = "none";
       });
+    }
+
+    // Pre-selects the first item in any release drop-down
+    const releaseSelect = document.getElementById('id_ios_release');
+    if (releaseSelect) {
+      releaseSelect.options[0].setAttribute('selected', 'true');
+      Array.from(releaseSelect.options).slice(1).forEach(option => option.removeAttribute('selected'));
     }
 
     GM.addStyle(
