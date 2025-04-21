@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.8.2
+// @version     2.8.3
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -128,11 +128,12 @@
       transform: translate(-50%, -50%);
       width: 50%; /* Adjust size as needed */
       height: auto; /* Maintain aspect ratio */
-    }
-    .target>div {
-      border: 4px dashed red;
-    }
-    `);
+    }`+
+    // Hide "Preview" tab (it uses a different Markdown renderer than what later people see)
+    `#previewTab {
+      display: none;
+    }`
+    );
 
   });
 })();
