@@ -39,7 +39,7 @@ These scripts are tested and confirmed to work with:
 
 ## How to Install
 
-### For desktop browsers (Firefox, Chromium-based)
+### For desktop PC browsers (Firefox, Chromium-based)
 
 1. Install [Violentmonkey](https://violentmonkey.github.io/).
 2. Click the install link for the script.
@@ -47,10 +47,10 @@ These scripts are tested and confirmed to work with:
 
 ### For Safari (macOS, iOS, iPadOS)
 
-1. Install the [Userscripts app](https://apps.apple.com/app/userscripts/id1463298887) from the App Store.
+1. Install the [Userscripts](https://apps.apple.com/app/userscripts/id1463298887) Safari extension from the App Store.
 2. Enable it in Safari settings and grant access to the sites you want.
-3. Open the script’s install link in Safari.
-4. Tap the Share button → Userscripts → Save Script.
+3. Open the script’s install link in Safari ("Raw" file).
+4. "Tap to install" in the extension icon in Safari (the blue `</>`).
 5. Refresh the page or enable the script from the Userscripts extension menu if needed.
 
 ---
