@@ -6,7 +6,7 @@ A collection of userscripts, designed to enhance websites with small, focused cu
 
 ## Available Scripts
 
-### [Feedback Assistant Helper](https://github.com/atnbueno/userscripts/raw/refs/heads/main/feedback-assistant-helper.user.js)
+### Feedback Assistant Helper
 
 **Enhances the web version of the [Apple Feedback Assistant](https://feedbackassistant.apple.com/)** by adding a download link to each report that lets you export full data and metadata as a JSON file, including:
 
@@ -18,13 +18,17 @@ A collection of userscripts, designed to enhance websites with small, focused cu
 It also provides on-page notifications to indicate progress and errors.
 
 This userscript is complemented with a shortcut that converts those JSON reports to Markdown using a customizable template:  
-`[link TBA]`
+<https://routinehub.co/shortcut/14347/>
+
+**[Install "Feedback Assistant Helper"](https://github.com/atnbueno/userscripts/raw/refs/heads/main/feedback-assistant-helper.user.js)**
 
 ---
 
-### [RoutineHub Tweaks](https://github.com/atnbueno/userscripts/raw/refs/heads/main/routinehub-tweaks.user.js)
+### RoutineHub Tweaks
 
 **Improves the UI/UX of [RoutineHub.co](https://routinehub.co)**. See the scripts comments for additional details.
+
+**[Install "RoutineHub Tweaks"](https://github.com/atnbueno/userscripts/raw/refs/heads/main/routinehub-tweaks.user.js)**
 
 ---
 
