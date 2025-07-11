@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name          Feedback Assistant Helper
 // @namespace     https://github.com/atnbueno/userscripts
-// @version       1.1
-// @description   Adds a download link with full metadata to Apple Feedback Assistant reports, including form details, follow-ups, and resolution status
+// @version       1.2
+// @description   Adds a JSON download link with full metadata to Apple Feedback Assistant report pages
 // @author        Antonio Bueno
 // @license       MIT
 
@@ -23,10 +23,17 @@
 (function () {
   "use strict";
 
+  // Abort if in macOS Safari, where the userscript doesn't work
+  if (navigator.vendor.includes("Apple") && navigator.platform === "MacIntel" && navigator.maxTouchPoints === 0) {
+    toast(`Sorry, but this userscript doesn't work in macOS Safari. Please use another browser and the "Violentmonkey" extension.`, "error", 10);
+    return;
+  }
+
+  // Continue with normal script execution
   toast("Waiting for the page to load...", "wait", 3);
   observeUrlChanges();
 
-  if (/\/feedback\/\d+$/.test(location.pathname)) {
+  if (/^\/feedback\/\d+$/.test(location.pathname)) {
     waitForElement("article", runScript);
   }
 
@@ -46,22 +53,39 @@
       // Fetch the main metadata about the report
       const details = await fetchJson(`https://appleseed.apple.com/sp/feedback/feedback_details/feedback/${id}?locale=en`);
 
+      // Exit early if the report is not found (likely not owned by the current user)
+      if (details?.message === "not found") {
+        toast("Report not found", "error");
+        return;
+      }
+
       // Fetch the full form response using the associated form_response_id
-      toast("Requesting submission details...", "wait");
+      toast("Requesting submission details...", "wait", 3);
       const form_response = await fetchJson(`https://appleseed.apple.com/sp/feedback/form_response_details/${details.form_response_id}?locale=en`);
+
+      // Exit early if the form response can't be loaded (could be due to access restrictions or server error)
+      if (form_response?.message === "unable to process request") {
+        toast("Submission details could not be retrieved", "error");
+        return;
+      }
 
       // Fetch all available follow-up entries in order
       let followups = [];
       if (Array.isArray(details.feedback_followup_ids)) {
+        const count = details.feedback_followup_ids.length;
+        if (count > 0) {
+          toast(`Requesting follow-up (x${count}) details...`, "wait");
+        }
         const sortedIds = [...details.feedback_followup_ids].sort(); // Clone and sort
-        const followupPromises = sortedIds.map(fid =>
-          fetchJson(`https://beta.apple.com/sp/feedback/feedback_followup/${fid}?locale=en`)
-            .then(data => ({ id: fid, ...data })) // attach ID to each result
-            .catch(err => {
-              toast(`Failed to fetch follow-up ${fid}`, "warning");
-              return null;
-            })
-        );
+        const followupPromises = sortedIds.map(async (fid) => {
+          try {
+            const data = await fetchJson(`https://beta.apple.com/sp/feedback/feedback_followup/${fid}?locale=en`);
+            return { id: fid, ...data }; // attach ID to each result
+          } catch (err) {
+            toast(`Failed to fetch follow-up ${fid}`, "warning");
+            return null;
+          }
+        });
 
         const results = await Promise.all(followupPromises);
         followups = results.filter(Boolean); // remove nulls
@@ -70,6 +94,7 @@
       // Fetch resolution status (may include internal Apple review notes)
       let status = null;
       try {
+        toast("Requesting status...", "wait", 3);
         status = await fetchJson(`https://beta.apple.com/sp/feedback/${id}/status?locale=en`);
       } catch (err) {
         status = {};
