@@ -8,19 +8,19 @@ A collection of userscripts, designed to enhance websites with small, focused cu
 
 ### Feedback Assistant Helper
 
-**Enhances the web version of the [Apple Feedback Assistant](https://feedbackassistant.apple.com/)** by adding a download link to each report that lets you export full data and metadata as a JSON file, including:
+**Enhances the web version of the [Apple Feedback Assistant](https://feedbackassistant.apple.com/)** by converting the feedback ID (e.g., `FB12345678`) at the top of the report into a link that lets you download full report data (as JSON), including:
 
 - Report details
 - Form response data
 - Follow-ups
-- Internal resolution status (if available)
+- Resolution status (if available)
 
-It also provides on-page notifications to indicate progress and errors.
+It also provides on-page notifications for progress and errors, and handles dynamic navigation automatically.
 
-This userscript is complemented with a shortcut that converts those JSON reports to Markdown using a customizable template:  
+This userscript pairs well with this shortcut that converts JSON reports into Markdown using a customizable template:  
 <https://routinehub.co/shortcut/14347/>
 
-**[Install "Feedback Assistant Helper"](https://github.com/atnbueno/userscripts/raw/refs/heads/main/feedback-assistant-helper.user.js)**
+👉🏼 **[Install "Feedback Assistant Helper"](https://github.com/atnbueno/userscripts/raw/refs/heads/main/feedback-assistant-helper.user.js)** 👈🏼
 
 ---
 
