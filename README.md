@@ -17,6 +17,8 @@ A collection of userscripts, designed to enhance websites with small, focused cu
 
 It also provides on-page notifications for progress and errors, and handles dynamic navigation automatically.
 
+**Note:** Due to macOS Safari security restrictions this userscript doesn't work, but it will work with any other browser that supports the **Violentmonkey** extension (see below)
+
 This userscript pairs well with this shortcut that converts JSON reports into Markdown using a customizable template:  
 <https://routinehub.co/shortcut/14347/>
 
