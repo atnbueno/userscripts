@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        RoutineHub tweaks
-// @version     2.9
+// @version     2.10
 // @license     MIT
 // @author      https://github.com/atnbueno
 // @description Experiments in improving the UX of using routinehub.co
@@ -67,6 +67,12 @@
       versionSelect.insertAdjacentHTML('afterend', `<label id="missing-version">No "${missingValue}" yet</label>`)
     }
 
+    // Add "Version history" button when it's missing (first versions)
+    const container = document.querySelector('.latest-release');
+    if (!container.querySelector('a[href$="changelog"]')) {
+      container.insertAdjacentHTML('beforeend', `<a href="${location.pathname}changelog" class="button is-dark is-fullwidth">Version history</a>`);
+    }
+
     // Prettifies QR code with RH logo
     const qrCodeImage = document.querySelector(".qr-code img");
     if (qrCodeImage) {
@@ -130,30 +136,6 @@
     }
     .select:has(#id_ios_release)::after {
       margin: -1.1em -0.3em 0 0 !important;
-    }
-    `+
-    // Fixes glyph issues
-    `.shortcut-icon::after {
-      /* iOS 18 glyphs used by default (no .ios18 class necessary) */
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios18-glyphs.png);
-    }
-    .ios17.shortcut-icon::after {
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios17-glyphs.png);
-    }
-    .ios16.shortcut-icon::after {
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios16-glyphs.png);
-    }
-    .ios15.shortcut-icon::after {
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios15-glyphs.png);
-    }
-    .ios14.shortcut-icon::after {
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios14-glyphs.png);
-    }
-    .ios13.shortcut-icon::after {
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios13-glyphs.png);
-    }
-    .ios12.shortcut-icon::after {
-      background-image: url(https://raw.githubusercontent.com/atnbueno/shortcut-icons/ab477b8e9d136017d9efbe21d6fc596e6d3ce485/ios12-glyphs.png);
     }`
     );
 
